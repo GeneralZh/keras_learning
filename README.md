@@ -1,5 +1,13 @@
 # Keras Learning
 
+- [Regression](https://github.com/Eurus-Holmes/keras_learning/blob/master/regression.ipynb)
+- [Classifier](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST.ipynb)
+- [CNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/MNIST_CNN.ipynb)
+- [Regression_RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/Regression_RNN_LSTM.py)
+- [Classifier_RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST_RNN.ipynb)
+- [Autoencoder](https://github.com/Eurus-Holmes/keras_learning/blob/master/Autoencoder.py)
+- [Save&Reload](https://github.com/Eurus-Holmes/keras_learning/blob/master/save%26reload.py)
+
 ------------------
 # Why Keras?
 # Keras: Deep Learning for humans
