@@ -1,5 +1,8 @@
 # Keras Learning
 
+----------
+
+
 - [Regression](https://github.com/Eurus-Holmes/keras_learning/blob/master/regression.ipynb)
 
 目的是对一组数据进行拟合。
@@ -20,8 +23,19 @@ model = Sequential()
 model.add(Dense(output_dim=1, input_dim=1))
 ```
 
+----------
+
+
 - [Classifier](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST.ipynb)
+
+----------
+
+
 - [CNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/MNIST_CNN.ipynb)
+
+----------
+
+
 - [Regression_RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/Regression_RNN_LSTM.py)
 
 **1. 搭建模型，仍然用 Sequential**
@@ -56,11 +70,19 @@ model.compile(optimizer=adam,
 在上一个回归问题中，我们是直接加 Dense 层，因为只在最后一个输出层把它变成一个全连接层。
 而这个问题是每个时间点都有一个 output，那需要 dense 对每一个 output 都进行一次全连接的计算。
 
-
+----------
 
 
 - [Classifier_RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST_RNN.ipynb)
+
+----------
+
+
 - [Autoencoder](https://github.com/Eurus-Holmes/keras_learning/blob/master/Autoencoder.py)
+
+----------
+
+
 - [Save&Reload](https://github.com/Eurus-Holmes/keras_learning/blob/master/save%26reload.py)
 
 ------------------
