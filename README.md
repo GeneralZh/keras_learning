@@ -2,15 +2,11 @@
 
 - [Regression](https://github.com/Eurus-Holmes/keras_learning/blob/master/regression.ipynb)
 
-目的是对一组数据进行拟合。
-
+> 目的是对一组数据进行拟合。
 **1. 用 Sequential 建立 model**
-
 **2. 再用 model.add 添加神经层，添加的是 Dense 全连接神经层**
-
 参数有两个，输入数据和输出数据的维度，
 本代码的例子中 x 和 y 是一维的。
-
 如果需要添加下一个神经层的时候，不用再定义输入的纬度，因为它默认就把前一层的输出作为当前层的输入。
 在这个例子里，只需要一层就够了。
 ``` python
@@ -22,6 +18,42 @@ model.add(Dense(output_dim=1, input_dim=1))
 - [Classifier](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST.ipynb)
 - [CNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/MNIST_CNN.ipynb)
 - [Regression_RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/Regression_RNN_LSTM.py)
+
+**1. 搭建模型，仍然用 Sequential**
+
+**2. 然后加入 LSTM 神经层**
+```python
+model = Sequential()
+# build a LSTM RNN
+model.add(LSTM(
+    batch_input_shape=(BATCH_SIZE, TIME_STEPS, INPUT_SIZE),       # Or: input_dim=INPUT_SIZE, input_length=TIME_STEPS,
+    output_dim=CELL_SIZE,
+    return_sequences=True,      # True: output at all steps. False: output as last step.
+    stateful=True,              # True: the final state of batch1 is feed into the initial state of batch2
+))
+# add output layer
+model.add(TimeDistributed(Dense(OUTPUT_SIZE)))
+adam = Adam(LR)
+model.compile(optimizer=adam,
+              loss='mse',)
+```
+
+`batch_input_shape`,  就是在后面处理批量的训练数据时它的大小是多少，有多少个时间点，每个时间点有多少个数据。
+
+`output_dim` , 就是 LSTM 里面有二十个 unit。
+
+`return_sequences`,  就是在每个时间点，要不要输出output，默认的是 false，现在我们把它定义为 true。如果等于 false，就是只在最后一个时间点输出一个值。
+
+`stateful`, 默认的也是 false，意义是批和批之间是否有联系。直观的理解就是我们在读完二十步，第21步开始是接着前面二十步的。也就是第一个 batch中的最后一步与第二个 batch 中的第一步之间是有联系的。
+
+**3. 有个不同点是 TimeDistributed**
+
+在上一个回归问题中，我们是直接加 Dense 层，因为只在最后一个输出层把它变成一个全连接层。
+而这个问题是每个时间点都有一个 output，那需要 dense 对每一个 output 都进行一次全连接的计算。
+
+
+
+
 - [Classifier_RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST_RNN.ipynb)
 - [Autoencoder](https://github.com/Eurus-Holmes/keras_learning/blob/master/Autoencoder.py)
 - [Save&Reload](https://github.com/Eurus-Holmes/keras_learning/blob/master/save%26reload.py)
