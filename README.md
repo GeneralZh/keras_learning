@@ -29,11 +29,12 @@ model.add(Dense(output_dim=1, input_dim=1))
 - [Classifier](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST.ipynb)
 
 数据用的是 Keras 自带 MNIST 这个数据包，再分成训练集和测试集。
+
 x 是一张张图片，y 是每张图片对应的标签，即它是哪个数字。
 
 简单介绍一下相关模块：
 
-`models.Sequential`用来一层一层一层的去建立神经层;
+`models.Sequential`用来一层一层地去建立神经层;
 
 `layers.Dense` 意思是这个神经层是全连接层;
 
@@ -51,11 +52,12 @@ from keras.layers import Dense, Activation
 from keras.optimizers import RMSprop
 ```
 
-在回归网络中用到的是 `model.add` 一层一层添加神经层，今天的方法是直接在模型的里面加多个神经层。好比一个水管，一段一段的，数据是从上面一段掉到下面一段，再掉到下面一段。
+在回归网络中用到的是 `model.add` 一层一层添加神经层，这里直接在模型的里面加多个神经层。
+好比一个水管，一段一段的，数据是从上面一段掉到下面一段，再掉到下面一段。
 
 第一段就是加入 Dense 神经层。32 是输出的维度，784 是输入的维度。
 
-第一层传出的数据有 32 个feature，传给激活单元.
+第一层传出的数据有 32 个feature，传给激活单元。
 激活函数用到的是 relu 函数。
 经过激活函数之后，就变成了非线性的数据。
 
