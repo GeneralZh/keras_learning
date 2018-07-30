@@ -1,6 +1,20 @@
 # Keras Learning
 
 - [Regression](https://github.com/Eurus-Holmes/keras_learning/blob/master/regression.ipynb)
+
+> 目的是对一组数据进行拟合。
+**1. 用 Sequential 建立 model**
+**2. 再用 model.add 添加神经层，添加的是 Dense 全连接神经层**
+参数有两个，输入数据和输出数据的维度，
+本代码的例子中 x 和 y 是一维的。
+如果需要添加下一个神经层的时候，不用再定义输入的纬度，因为它默认就把前一层的输出作为当前层的输入。
+在这个例子里，只需要一层就够了。
+``` python
+# build a neural network from the 1st layer to the last layer
+model = Sequential()
+model.add(Dense(output_dim=1, input_dim=1))
+```
+
 - [Classifier](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST.ipynb)
 - [CNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/MNIST_CNN.ipynb)
 - [Regression_RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/Regression_RNN_LSTM.py)
