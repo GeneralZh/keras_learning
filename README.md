@@ -292,6 +292,68 @@ for step in range(4001):
 
 - [Autoencoder](https://github.com/Eurus-Holmes/keras_learning/blob/master/Autoencoder.py)
 
+自编码，简单来说就是把输入数据进行一个压缩和解压缩的过程。
+
+原来有很多 Feature，压缩成几个来代表原来的数据，解压之后恢复成原来的维度，再和原数据进行比较。
+
+做的事情是把 `datasets.mnist` 数据的 28×28＝784 维的数据，压缩成 2 维的数据，然后在一个二维空间中可视化出分类的效果。
+
+模型结构：
+
+`encoding_dim`, 要压缩成的维度.
+
+```python
+# in order to plot in a 2D figure
+encoding_dim = 2
+
+# this is our input placeholder
+input_img = Input(shape=(784,))
+```
+
+建立 `encoded` 层和 `decoded` 层，再用 `autoencoder` 把二者组建在一起。训练时用 `autoencoder` 层。
+
+**1. encoded 用4层 Dense 全联接层**
+
+激活函数用 `relu`，输入的维度就是前一步定义的 `input_img`。
+
+接下来定义下一层，它的输出维度是64，输入是上一层的输出结果。
+
+在最后一层，我们定义它的输出维度就是想要的 `encoding_dim＝2`。
+
+**2. 解压的环节，它的过程和压缩的过程是正好相反的**
+
+相对应层的激活函数也是一样的，不过在解压的最后一层用到的激活函数是 `tanh`。因为输入值是由 -0.5 到 0.5 这个范围，在最后一层用这个激活函数的时候，它的输出是 -1 到 1，可以是作为一个很好的对应。
+
+```python
+# encoder layers
+encoded = Dense(128, activation='relu')(input_img)
+encoded = Dense(64, activation='relu')(encoded)
+encoded = Dense(10, activation='relu')(encoded)
+encoder_output = Dense(encoding_dim)(encoded)
+
+# decoder layers
+decoded = Dense(10, activation='relu')(encoder_output)
+decoded = Dense(64, activation='relu')(decoded)
+decoded = Dense(128, activation='relu')(decoded)
+decoded = Dense(784, activation='tanh')(decoded)
+```
+
+接下来直接用 `Model` 这个模块来组建模型
+
+输入就是图片，输出是解压的最后的结果。
+
+```python
+# construct the autoencoder model
+autoencoder = Model(input=input_img, output=decoded)
+```
+
+当我们想要看由 784 压缩到 2维后，这个结果是什么样的时候，也可以只单独组建压缩的板块，此时它的输入是图片，输出是压缩环节的最后结果。
+
+```python
+# construct the encoder model for plotting
+encoder = Model(input=input_img, output=encoder_output)
+```
+
 ----------
 
 
