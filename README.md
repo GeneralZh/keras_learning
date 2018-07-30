@@ -80,6 +80,92 @@ model = Sequential([
 
 - [CNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/MNIST_CNN.ipynb)
 
+数据仍然是用 mnist。
+
+**1. 建立网络第一层，建立一个 Convolution2D，参数有 filter 的数量。**
+
+`filter` 就是滤波器，用32个滤波器扫描同一张图片，每个滤波器会总结出一个 feature。每个滤波器会生成一整张图片，有32个滤波器就会生成32张代表不同特征的图片；
+
+`nb_row、nb_col` 代表这个滤波器有多少行多少列；
+
+`border_mode` 代表这个滤波器在过滤时候用什么方式，这里采用 same。
+因为是第一层，所以需要定义输入数据的维度，1, 28, 28 就是图片图片的维度。
+滤波器完成之后，会生成32层的数据，但是图片的长和宽是不变的，仍然是28×28。
+
+之后再加一个 `relu` 激活函数。
+
+```python
+# Another way to build your CNN
+model = Sequential()
+
+# Conv layer 1 output shape (32, 28, 28)
+model.add(Convolution2D(
+    nb_filter=32,
+    nb_row=5,
+    nb_col=5,
+    border_mode='same',     # Padding method
+    dim_ordering='th',      # if use tensorflow, to set the input dimension order to theano ("th") style, but you can change it.
+    input_shape=(1,         # channels
+                 28, 28,)    # height & width
+))
+model.add(Activation('relu'))
+```
+
+**2. Pooling 是一个向下取样的过程。**
+
+它可以缩小生成出来的长和宽，高度不需要被压缩。
+
+`pool_size` 是向下取样的时候，考虑多长多宽的图片。
+
+`strides` 步长，是取完一个样之后要跳几步再取样，再跳几步再取样。
+
+```python
+# Pooling layer 1 (max pooling) output shape (32, 14, 14)
+model.add(MaxPooling2D(
+    pool_size=(2, 2),
+    strides=(2, 2),
+    border_mode='same',    # Padding method
+))
+```
+
+**3. 接下来建立第二个神经层。**
+
+有 64 个 filter，5, 5 的长宽，再跟着一个激活函数；
+
+再跟着一个 `MaxPooling2D` 取样。
+
+```python
+# Conv layer 2 output shape (64, 14, 14)
+model.add(Convolution2D(64, 5, 5, border_mode='same'))
+model.add(Activation('relu'))
+
+# Pooling layer 2 (max pooling) output shape (64, 7, 7)
+model.add(MaxPooling2D(pool_size=(2, 2), border_mode='same'))
+```
+
+**4. 接下来进入全联接层。**
+
+用 `Flatten` 把卷出来的三维的层，抹平成二维的；
+
+接下来就加一个 `Dense` 全联接层，抹平就是为了可以把这一个一个点全连接成一个层；
+
+接着再加一个激活函数。
+
+```python
+# Fully connected layer 1 input shape (64 * 7 * 7) = (3136), output shape (1024)
+model.add(Flatten())
+model.add(Dense(1024))
+model.add(Activation('relu'))
+```
+
+**5. 在第二个全连接层，输出 10 个 unit, 用 softmax 作为分类。**
+
+```python
+# Fully connected layer 2 to shape (10) for 10 classes
+model.add(Dense(10))
+model.add(Activation('softmax'))
+```
+
 ----------
 
 
