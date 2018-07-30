@@ -208,6 +208,85 @@ model.compile(optimizer=adam,
 
 - [Classifier_RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/Classifier_MNIST_RNN.ipynb)
 
+RNN 是一个序列化的神经网络，我们处理图片数据的时候，也要以序列化的方式去考虑。
+
+图片是由一行一行的像素组成，我们就一行一行地去序列化地读取数据。最后再进行一个总结，来决定它到底是被分辨成哪一类。
+
+用到的参数含义：
+
+`TIME_STEPS` 是要读取多少个时间点的数据，如果一次读一行需要读28次；
+
+`INPUT_SIZE` 每次每一行读取多少个像素；
+
+`BATCH_SIZE` 每一批训练多少张；
+
+`BATCH_INDEX` 用来生成数据；
+
+`OUTPUT_SIZE` 分类结果的长度，0到9，所以长度为 10；
+
+`CELL_SIZE` 网络中隐藏层要放多少个 unit；
+
+`LR` 是学习率。
+
+**1. 用 Sequential**
+
+建立模型，就是一层一层地加上神经层。
+
+```python
+# build RNN model
+model = Sequential()
+```
+
+**2. 加上 SimpleRNN**
+
+`batch_input_shape` 就是在后面处理批量的训练数据时它的大小是多少，有多少个时间点，每个时间点有多少个像素。
+
+```python
+# RNN cell
+model.add(SimpleRNN(
+    # for batch_input_shape, if using tensorflow as the backend, we have to put None for the batch_size.
+    # Otherwise, model.evaluate() will get error.
+    batch_input_shape=(None, TIME_STEPS, INPUT_SIZE),       # Or: input_dim=INPUT_SIZE, input_length=TIME_STEPS,
+    output_dim=CELL_SIZE,
+    unroll=True,
+))
+```
+
+**3. 加 Dense 输出层**
+
+输出 output 长度为 10，接着用 softmax 激活函数用于分类。
+
+```python
+# output layer
+model.add(Dense(OUTPUT_SIZE))
+model.add(Activation('softmax'))
+```
+
+**4. 在训练的时候有一个小技巧，就是怎么去处理批量**
+
+输出结果时每 500 步输出一下测试集的准确率和损失。
+
+需要用到 BATCH_INDEX，一批批地截取数据，下一批的时候，这个 BATCH_INDEX 就需要累加，后面的时间点和步长没有变化都是28。
+
+y 的批量和 x 的处理是一样的，只不过 y 只有二维，所以它只有两个参数。
+
+后面有一个判断语句，如果这个 index 大于训练数据的总数，index 就变为 0，再从头开始一批批处理。
+
+```python
+# training
+for step in range(4001):
+    # data shape = (batch_num, steps, inputs/outputs)
+    X_batch = X_train[BATCH_INDEX: BATCH_INDEX+BATCH_SIZE, :, :]
+    Y_batch = y_train[BATCH_INDEX: BATCH_INDEX+BATCH_SIZE, :]
+    cost = model.train_on_batch(X_batch, Y_batch)
+    BATCH_INDEX += BATCH_SIZE
+    BATCH_INDEX = 0 if BATCH_INDEX >= X_train.shape[0] else BATCH_INDEX
+
+    if step % 500 == 0:
+        cost, accuracy = model.evaluate(X_test, y_test, batch_size=y_test.shape[0], verbose=False)
+        print('test cost: ', cost, 'test accuracy: ', accuracy)
+```
+
 ----------
 
 
