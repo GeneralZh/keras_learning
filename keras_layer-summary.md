@@ -75,5 +75,38 @@ model.add(Masking(mask_value=0., input_shape=(timesteps, features)))
 model.add(LSTM(32))
 ```
 
+----------
+# Flatten layer & Dense layer
+
+Flatten层用来将输入“压平”，即把多维的输入一维化，**常用在从卷积层(Convolution)到全连接层(Dense)的过渡**。
+
+```python
+model = Sequential()
+model.add(Convolution2D(64, 3, 3,
+            border_mode='same',
+            input_shape=(3, 32, 32)))
+# now: model.output_shape == (None, 64, 32, 32)
+model.add(Flatten())
+# now: model.output_shape == (None, 65536)
+model.add(Dense(32))
+```
+
+也就是说，Convolution卷积层之后是无法直接连接Dense全连接层的，需要把Convolution层的数据压平（Flatten），然后就可以直接加Dense层了。上面code最后一行, Dense(32)表示output的shape为(*,32)。
+
+注意，当Dense作为第一层时，需要specify输入的维度，之后就不用了，如下：
+
+```python
+# as first layer in a sequential model:
+model = Sequential()
+model.add(Dense(32, input_shape=(16,)))
+# now the model will take as input arrays of shape (*, 16)
+# and output arrays of shape (*, 32)
+
+# after the first layer, you don't need to specify
+# the size of the input anymore:
+model.add(Dense(32))
+```
+
+----------
 
 
