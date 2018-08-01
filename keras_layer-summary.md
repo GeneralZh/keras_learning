@@ -37,7 +37,7 @@ model.add(Dense(64, bias=False))
 
 直观的例子如下，经过**Max_pooling**后，一帧图像相当于被采样成一个更小的图像，但保存了原始图像的大量特征：
 
-![Max_pooling示例]](http://upload-images.jianshu.io/upload_images/2528310-d7761035ec7517a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/500)
+![Max_pooling示例](http://upload-images.jianshu.io/upload_images/2528310-d7761035ec7517a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/500)
 
 ----------
 
