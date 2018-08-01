@@ -108,5 +108,23 @@ model.add(Dense(32))
 ```
 
 ----------
+# Dropout layer
+
+如dropout的名字，就是要随机扔掉当前层一些weight，相当于废弃了一部分Neurons。
+它还有另一个名字 dropout regularization, 所以你应该知道它有什么作用了：
+
+ 1. 降低模型复杂度，增强模型的泛化能力，防止过拟合。
+ 2. 顺带降低了运算量。。。
+
+```python
+model = Sequential()
+model.add(Dense(60, input_dim=60, kernel_initializer='normal', activation='relu', kernel_constraint=maxnorm(3)))
+model.add(Dropout(0.2))
+model.add(Dense(30, kernel_initializer='normal', activation='relu', kernel_constraint=maxnorm(3)))
+model.add(Dropout(0.2))
+model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
+```
+
+----------
 
 
