@@ -359,6 +359,18 @@ encoder = Model(input=input_img, output=encoder_output)
 
 - [Save&Reload](https://github.com/Eurus-Holmes/keras_learning/blob/master/save%26reload.py)
 
+----------
+
+ - [Nested_LSTM](https://github.com/Eurus-Holmes/keras_learning/blob/master/Nested_LSTM.md)
+
+----------
+
+ - [CNN-RNN](https://github.com/Eurus-Holmes/keras_learning/blob/master/CNN-RNN.md)
+
+----------
+
+ - [keras_layer-summary](https://github.com/Eurus-Holmes/keras_learning/blob/master/keras_layer-summary.md)
+
 ------------------
 # Why Keras?
 # Keras: Deep Learning for humans
