@@ -29,6 +29,7 @@ model.add(Dense(64, bias=False))
 
 > 池化层是基于采样的离散过程（sample-based discretization process）。听起来好复杂的样子，简单来说，即对input进行采样，降低input的维度，减少了参数（简化了计算），增强了模型的泛化能力，也降低了overfitting的可能性。
 
+![Figure 1](https://github.com/Eurus-Holmes/keras_learning/raw/master/images/1.png)
 ![1](https://leanote.com/api/file/getImage?fileId=5b616403ab64414e6300176a)
 
 *Max_pooling*
