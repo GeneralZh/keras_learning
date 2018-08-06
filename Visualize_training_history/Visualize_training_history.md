@@ -86,10 +86,10 @@ plt.show()
 
 从图中可以看出，模型可以受到更多的训练，两个数据集的准确性趋势在最后几个周期仍然在上升。我们还可以看到，该模型尚未过度学习训练数据集，两种数据集显示出相似的模型技巧。
 
-![1](https://leanote.com/api/file/getImage?fileId=5b67f107ab644115b2001af9)
+![Figure 2](https://github.com/Eurus-Holmes/keras_learning/raw/master/images/2.png)
 
 从下面损失图中，我们可以看到该模型在训练和验证数据集（test）上都具有类似的性能。如果图中后面线开始平行，这可能意味着过早的停止了训练。
 
-![2](https://leanote.com/api/file/getImage?fileId=5b67f19dab644115b2001b2e)
+![Figure 3](https://github.com/Eurus-Holmes/keras_learning/raw/master/images/3.png)
 
 ----------
